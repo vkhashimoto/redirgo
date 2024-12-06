@@ -18,7 +18,7 @@
 				devShells.default = mkShell {
 					inherit name;
 					buildInputs = with pkgs; [
-						go
+						go gopls
 					];
 					shellHook = ''
 						echo "Entered development environment"
