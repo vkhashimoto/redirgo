@@ -1,0 +1,5 @@
+["localhost:8080"]
+"source" = "https://github.com/vkhashimoto/redirgo"
+
+["*"]
+"example" = "https://example.org"
