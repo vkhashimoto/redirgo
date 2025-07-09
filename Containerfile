@@ -5,7 +5,7 @@ WORKDIR /app
 COPY go.mod .
 COPY go.sum .
 COPY src/ src/
-RUN go build -o bin/api ./src/
+RUN go build -o bin/api .
 
 COPY config/ config/
 
