@@ -28,7 +28,16 @@ func renderNotFound(w http.ResponseWriter, r *http.Request) {
 }
 
 func root(w http.ResponseWriter, r *http.Request) {
-	http.ServeFile(w, r, "public/index.html")
+	host := r.Host
+	redirectTo, err := links.FindRedirection(host, "")
+	if err != nil {
+		http.ServeFile(w, r, "public/index.html")
+		return
+	}
+	w.Header().Add("Referer", "no-referrer")
+	w.Header().Add("Location", redirectTo)
+	w.WriteHeader(http.StatusTemporaryRedirect)
+	return
 }
 
 func main() {
