@@ -36,5 +36,32 @@ func TestFindRedirectionLinkNotFound(t *testing.T) {
 		t.Errorf("Wanted: `%s`\nGot: `%s`", expected, err.Error())
 		t.FailNow()
 	}
+}
 
+func TestFindRedirectionRootPath(t *testing.T) {
+	expected := "https://github.com/vkhashimoto"
+	LoadLinks("../config/links.toml")
+	link, err := FindRedirection("localhost:8080", "")
+	if err != nil {
+		t.Errorf("Unexpected error: %s", err)
+		t.FailNow()
+	}
+	if link != expected {
+		t.Errorf("Wanted: %s\nGot: %s", expected, link)
+		t.FailNow()
+	}
+}
+
+func TestFindRedirectionLinkNotFoundRootPath(t *testing.T) {
+	expected := "Link not found"
+	LoadLinks("../config/links.toml")
+	_, err := FindRedirection("localhost:8081", "")
+	if err == nil {
+		t.Error("Expected error for unconfigured root path")
+		t.FailNow()
+	}
+	if err.Error() != expected {
+		t.Errorf("Wanted: `%s`\nGot: `%s`", expected, err.Error())
+		t.FailNow()
+	}
 }
